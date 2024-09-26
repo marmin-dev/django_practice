@@ -1,0 +1,21 @@
+{% extends 'post/base.html' %}  <!-- base.html에서 navbar.html 포함 -->
+
+{% block title %}게시글 작성{% endblock %}
+
+{% block content %}
+    <h1>게시글 작성</h1>
+    <form method="POST" action="/post/create/">
+        {% csrf_token %}
+        <input type="text" placeholder="제목" name="title" id="title" required/>
+        <br>
+        <br>
+        <input type="text" placeholder="작성자" name="author" id="author" required/>
+        <br>
+        <br>
+        <textarea name="content" id="content" required></textarea>
+        <br><!-- 폼을 단락으로 출력 -->
+        <br>
+        <button type="submit">작성하기</button>
+    </form>
+    <a href="/post/">게시글 목록으로 돌아가기</a>  <!-- 게시글 목록으로 돌아가는 링크 -->
+{% endblock %}

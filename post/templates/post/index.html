@@ -1,40 +1,19 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>블로그 목록</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .blog-post {
-            border-bottom: 1px solid #ddd;
-            padding: 10px 0;
-        }
-        .blog-post h2 {
-            margin: 0;
-            font-size: 1.5em;
-        }
-        .blog-post p {
-            margin: 5px 0;
-            color: #666;
-        }
-    </style>
-</head>
-<body>
+{% extends 'post/base.html' %}  <!-- base.html에서 navbar.html 포함 -->
+
+{% block title %}블로그 목록{% endblock %}
+
+{% block content %}
     <h1>블로그 게시글 목록</h1>
+    <h2><a href="{% url 'post:create' %}">게시글 작성</a></h2>
     <div>
         {% for post in posts %}
         <div class="blog-post">
             <h2>{{ post.title }}</h2>
             <p>{{ post.content|truncatewords:20 }}</p>
-
-            <a href="/post/{{ post.post_id }}/">상세보기</a>
+            <a href="{% url 'post:detail' post.post_id %}">상세보기</a>
         </div>
         {% empty %}
         <p>게시글이 없습니다.</p>
         {% endfor %}
     </div>
-</body>
-</html>
+{% endblock %}

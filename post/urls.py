@@ -8,7 +8,7 @@ urlpatterns = [
 #     # 상세 페이지
     path('<int:post_id>/', views.detail, name='detail'),
 #     # 수정 페이지
-#     path('/update/<int:post_id>/', views.update, name='update'),
+#     path('update/<int:post_id>/', views.update, name='update'),
 #     # 새 게시글 페이지
-#     path('/create/', views.create_post, name='create')
+    path('create/', views.create_post, name='create')
 ]
