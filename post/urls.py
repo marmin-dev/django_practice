@@ -10,5 +10,9 @@ urlpatterns = [
 #     # 수정 페이지
 #     path('update/<int:post_id>/', views.update, name='update'),
 #     # 새 게시글 페이지
-    path('create/', views.create_post, name='create')
+    path('create/', views.create_post, name='create'),
+     #게시글 삭제
+    path('delete/<int:post_id>/', views.delete_post, name="delete"),
+    # 게시글 업데이트
+    path('update/<int:post_id>/', views.update_post, name="update")
 ]

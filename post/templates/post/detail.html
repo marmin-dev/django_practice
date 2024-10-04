@@ -8,8 +8,8 @@
     <p>{{ post.content }}</p>
 
     <!-- 게시글 수정/삭제 버튼 -->
-    <a href="#">수정</a> |
-    <a href="#">삭제</a>
+    <a href="/post/update/{{ post.post_id }}">수정</a> |
+    <a href="/post/delete/{{ post.post_id }}">삭제</a>
 
     <hr>
     <h2>댓글</h2>

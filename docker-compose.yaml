@@ -1,0 +1,10 @@
+version: '3'
+services:
+  capture:
+    build: .
+    ports:
+      - "8000:8000"
+#    volumes:
+#      - /home/appsvr/app/test
+    restart: always
+    container_name: django-container

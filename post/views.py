@@ -27,3 +27,23 @@ def create_post(request):
         post.save()
         return redirect('post:detail', post_id=post.post_id)
     return render(request, 'post/create.html')
+
+
+# 게시글 삭제
+def delete_post(request, post_id):
+    if request.method == "GET":
+        post = get_object_or_404(Post, post_id= post_id)
+        post.delete()
+        return redirect('post:index')
+
+# 게시글 수정
+def update_post(request, post_id):
+    post = get_object_or_404(Post, post_id=post_id)
+    if request.method == "POST":
+        post.title = request.POST.get("title")
+        post.author = request.POST.get("author")
+        post.content = request.POST.get("content")
+        post.save()
+        return redirect("post:detail", post_id=post_id)
+    context = {'post': post}
+    return render(request, 'post/update.html', context)

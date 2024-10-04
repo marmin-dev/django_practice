@@ -1,0 +1,22 @@
+# 1. 베이스 이미지 선택 (Python 3.9 버전 사용)
+FROM python:3.12
+
+# 2. 작업 디렉토리 생성
+WORKDIR /app
+
+# 3. 필요한 패키지 설치
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 4. Django 프로젝트 코드 복사
+COPY . /app/
+
+# 5. 환경 변수 설정 (디버그 설정 및 호스트 설정)
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# 6. 포트 개방 (Gunicorn 기본 포트는 8000)
+EXPOSE 8000
+
+# 7. Gunicorn 실행 명령어
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "blog.wsgi:application"]
