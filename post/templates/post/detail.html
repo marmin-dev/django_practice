@@ -4,34 +4,34 @@
 
 {% block content %}
     <h1>{{ post.title }}</h1>
-    <h3>{{ post.author }}</h3>
+    <h3>{{ post.user.nickname }}</h3>
     <p>{{ post.content }}</p>
 
     <!-- 게시글 수정/삭제 버튼 -->
-    <a href="/post/update/{{ post.post_id }}">수정</a> |
-    <a href="/post/delete/{{ post.post_id }}">삭제</a>
-
+    {% if post.user.nickname == user.nickname %}
+        <a href="/post/update/{{ post.post_id }}">수정</a> |
+        <a href="/post/delete/{{ post.post_id }}">삭제</a>
+    {% endif %}
     <hr>
     <h2>댓글</h2>
-
-    <!-- 댓글 목록 -->
-<!--    {% for comment in comments %}-->
-<!--        <div>-->
-<!--            <strong>{{ comment.author }}</strong> | {{ comment.created_at }}-->
-<!--            <p>{{ comment.content }}</p>-->
-<!--            <a href="{% url 'comment_edit' comment.id %}">수정</a> |-->
-<!--            <a href="{% url 'comment_delete' comment.id %}">삭제</a>-->
-<!--        </div>-->
-<!--        <hr>-->
-<!--    {% empty %}-->
-<!--        <p>댓글이 없습니다.</p>-->
-<!--    {% endfor %}-->
-
-    <!-- 댓글 작성 폼 -->
     <h3>댓글 작성하기</h3>
-    <form method="post">
+    <form method="post" action="{% url 'post:comment' post_id=post.post_id %}">
         {% csrf_token %}
-        <textarea name="content" cols="40" rows="5" placeholder="댓글을 입력하세요"></textarea><br>
+        <textarea name="comment" cols="40" rows="5" placeholder="댓글을 입력하세요"></textarea><br>
         <button type="submit">댓글 작성</button>
     </form>
+    <!-- 댓글 목록 -->
+    {% for comment in comments %}
+        <div>
+            <strong>{{ comment.comment_user.nickname }}</strong> | {{ comment.created_at }}
+            <p>{{ comment.comment_content }}</p>
+
+        </div>
+        <hr>
+    {% empty %}
+        <p>댓글이 없습니다.</p>
+    {% endfor %}
+
+    <!-- 댓글 작성 폼 -->
+
 {% endblock %}

@@ -14,5 +14,7 @@ urlpatterns = [
      #게시글 삭제
     path('delete/<int:post_id>/', views.delete_post, name="delete"),
     # 게시글 업데이트
-    path('update/<int:post_id>/', views.update_post, name="update")
+    path('update/<int:post_id>/', views.update_post, name="update"),
+    #  댓글 추가
+    path('comment/<int:post_id>', views.create_comment, name="comment")
 ]

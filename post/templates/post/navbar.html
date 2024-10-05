@@ -3,6 +3,12 @@
         <ul>
             <li><a href="{% url 'post:index' %}">홈</a></li>
             <li><a href="{% url 'post:create' %}">게시글 작성</a></li>
+            {% if user.nickname %}
+                <li><a href="#">{{ user.nickname }}</a></li>
+                <li><a href="{% url 'login:logout' %}">로그아웃</a></li>
+            {% else %}
+                <li><a href="{% url 'login:index' %}">로그인</a></li>
+            {% endif %}
         </ul>
     </nav>
 </header>

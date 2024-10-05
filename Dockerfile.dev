@@ -1,0 +1,12 @@
+# 개발 환경에서는 가볍고 빠르게 실행되도록 설정
+FROM python:3.12-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY . .
+
+# 개발 서버 실행
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

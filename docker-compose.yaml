@@ -1,10 +1,27 @@
-version: '3'
+version: '3.9'
+
 services:
-  capture:
-    build: .
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev  # 개발 환경에서 사용할 Dockerfile 지정
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
     ports:
       - "8000:8000"
-#    volumes:
-#      - /home/appsvr/app/test
-    restart: always
-    container_name: django-container
+    profiles:
+      - dev
+
+  web-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    command: gunicorn blog.wsgi:application --bind 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    profiles:
+      - prod
+
+volumes:
+  db-data:
