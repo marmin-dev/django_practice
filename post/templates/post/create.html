@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>게시글 작성</h1>
-    <form method="POST" action="/post/create/">
+    <form method="POST" action="{% url 'post:create' %}">
         {% csrf_token %}
         <input type="text" placeholder="제목" name="title" id="title" required/>
         <br>

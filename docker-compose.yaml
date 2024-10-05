@@ -4,24 +4,41 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile.dev  # 개발 환경에서 사용할 Dockerfile 지정
-    command: python manage.py runserver 0.0.0.0:8000
+      dockerfile: Dockerfile.dev
+    command: /bin/sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
     ports:
       - "8000:8000"
     profiles:
       - dev
+    depends_on:
+      - db
 
   web-prod:
     build:
       context: .
       dockerfile: Dockerfile.prod
-    command: gunicorn blog.wsgi:application --bind 0.0.0.0:8000
+    command: /bin/sh -c "python manage.py makemigrations && python manage.py migrate && gunicorn blog.wsgi:application --bind 0.0.0.0:8000"
     ports:
       - "8000:8000"
     profiles:
       - prod
+    depends_on:
+      - db
+
+
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: thisispassword
+      MYSQL_DATABASE: blog_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
 
 volumes:
   db-data:

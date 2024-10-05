@@ -13,5 +13,12 @@
         <button type="submit">Login</button>
     </form>
     <p>계정 없냐? <a href="{% url 'login:signup' %}">여기서 회원가입 해라</a>.</p>
+    {% if alert_message %}
+        <script type="text/javascript">
+            console.log("{{ alert_message }}");
+            alert("{{ alert_message }}");
+            window.location.href = "/post/"
+        </script>
+    {% endif %}
 </body>
 </html>

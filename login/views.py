@@ -6,6 +6,10 @@ from login.forms import LoginForm, CustomUserCreationForm
 
 # 로그인
 def login_view(request):
+    if request.user.is_authenticated:
+        alert_message = "이미 로그인 되어 있습니다."
+    else:
+        alert_message = ""
     if request.method == 'POST':
         form = LoginForm(request, data=request.POST)
         if form.is_valid():
@@ -17,10 +21,15 @@ def login_view(request):
                 return redirect("post:index")
     else:
         form = LoginForm()
-    return render(request, 'login/index.html', {'form': form})
+    return render(request, 'login/index.html', {'form': form, 'alert_message':alert_message})
+
 
 # 회원 가입
 def signup_view(request):
+    if request.user.is_authenticated:
+        alert_message = "이미 로그인 되어 있습니다."
+    else:
+        alert_message = ""
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
@@ -30,7 +39,7 @@ def signup_view(request):
     else:
         form = CustomUserCreationForm()
 
-    return render(request, 'login/signup.html', {'form': form})
+    return render(request, 'login/signup.html', {'form': form, 'alert_message': alert_message})
 
 # 로그아웃
 def logout_view(reqeust):
